@@ -5,7 +5,6 @@ const {
 } = require('./files');
 
 const reservationData = require('../data/reservationData');
-const { json } = require('express');
 
 const renderHomePage = (req, res) => {
     res.sendFile(homePage)
