@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Reservation - Burger Jacks</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+<body class="font-sans antialiased text-gray-900 min-h-screen flex flex-col justify-between">
+    <header>
+    <div class="bg-gray-50">
+  <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+    <h2 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
+       🍔 Burger Jacks
+      <br>
+    </h2>
+    <h3><span class="text-indigo-600">Where we put jack in our burgers!</span></h3>
+    <div class="mt-8 flex lg:flex-shrink-0 lg:mt-0">
+      <div class="inline-flex rounded-md shadow">
+        <a href="/reservations/new" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+          Book Now
+        </a>
+      </div>
+      <div class="ml-3 inline-flex rounded-md shadow">
+        <a href="/reservations/view" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-white hover:text-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+          View Bookings
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+<article class="h-min-50">
+     <form class="mt-8 p-24" action="/api/reservations/create" method="POST" data-js="reservation-form">
+      <div class="rounded-md shadow-sm">
+        <div>
+          <input aria-label="Email address" name="email" type="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Email address" required>
+        </div>
+        <div class="-mt-px">
+          <input aria-label="Full Name" name="name" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Full Name" required>
+        </div>
+        <div class="-mt-px">
+          <input aria-label="Phone" name="phone" type="text" pattern="[0-9]+" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="Phone" required>
+        </div>
+        <div class="-mt-px">
+          <input aria-label="ID" name="id" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5" placeholder="id" required>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-between">
+        <div class="flex items-center">
+          <input id="waitlist" name="waitlist" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" value="1">
+          <label for="waitlist" class="ml-2 block text-sm leading-5 text-gray-900">
+            Add to waitlist
+          </label>
+        </div>
+
+        <div class="text-sm leading-5">
+          <a href="/reservations/view" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+            View Bookings
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button type="submit" data-js="submit-btn" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out disabled:bg-gray-500 disabled:text-gray-900" >
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition ease-in-out duration-150" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+            </svg>
+          </span>
+          Make reservation
+        </button>
+      </div>
+    </form>
+</article>
+
+<footer class="flex items-center text-sm md:text-base p-8">
+    <a href="/api/waitlist" class="inline-block rounded-lg font-medium leading-none py-2 px-3 focus:outline-none bg-indigo-50 text-indigo-700 hover:bg-indigo-500 hover:text-white">Api waitlist</a>
+
+    <a href="/api/reservations" class="inline-block rounded-lg font-medium leading-none py-2 px-3 focus:outline-none bg-indigo-50 text-indigo-700 hover:bg-indigo-500 hover:text-white">Api reservations</a>
+</footer>
+
+<script>
+    // Dont need document.ready() as this script is after all other html
+    const $btn = $('[data-js="submit-btn"]');
+    const $form = $('[data-js="reservation-form"]');
+
+    const resetForm = () => {
+        $btn.text('Make Reservation');
+        $btn.prop('disabled', false)
+        $form[0].reset();
+    }
+
+    $form.on('submit', (e) => {
+        e.preventDefault();
+        const reservationSubmission = $form.serializeArray();
+        const action = $form.prop('action');
+
+        $btn.prop('disabled', true)
+        $btn.text('...Submitting');
+
+        $.post(action, reservationSubmission).then( ({success, message}) => {
+            $btn.text(message);
+            if (success) {
+                setTimeout(resetForm, 5000);
+            }
+        })
+    })
+</script>
+</body>
+</html>

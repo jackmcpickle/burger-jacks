@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Reservations - Burger Jacks</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+<body class="font-sans antialiased text-gray-900 min-h-screen flex flex-col justify-between">
+    <header class="bg-gray-50">
+  <div class="max-w-screen-xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+    <h2 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
+       🍔 Burger Jacks
+      <br>
+    </h2>
+    <h3><span class="text-indigo-600">Where we put jack in our burgers!</span></h3>
+    <div class="mt-8 flex lg:flex-shrink-0 lg:mt-0">
+      <div class="inline-flex rounded-md shadow">
+        <a href="/reservations/new" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+          Book Now
+        </a>
+      </div>
+      <div class="ml-3 inline-flex rounded-md shadow">
+        <a href="/reservations/view" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-white hover:text-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+          View Bookings
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+<article class="h-min-50">
+    <div class="flex flex-col p-24">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr>
+              <th class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                ID
+              </th>
+              <th class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
+              <th class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Email
+              </th>
+              <th class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                Phone
+              </th>
+              <th class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">
+                  Booked
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200" data-js="reservation-table">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</article>
+
+<footer class="flex items-center text-sm md:text-base p-8">
+    <a href="/api/waitlist" class="inline-block rounded-lg font-medium leading-none py-2 px-3 focus:outline-none bg-indigo-50 text-indigo-700 hover:bg-indigo-500 hover:text-white">Api waitlist</a>
+
+    <a href="/api/reservations" class="inline-block rounded-lg font-medium leading-none py-2 px-3 focus:outline-none bg-indigo-50 text-indigo-700 hover:bg-indigo-500 hover:text-white">Api reservations</a>
+</footer>
+
+<script>
+
+    const $reservationTableBody = $('[data-js="reservation-table"]');
+
+    function renderReservation(item) {
+        const bookedClasses = 'bg-green-100 text-green-800';
+        const waitlistClasses = 'bg-red-100 text-red-800';
+        const bookedState = item.waitlist ? waitlistClasses : bookedClasses;
+        return `
+            <tr>
+            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                <div class="text-sm leading-5 text-gray-900">${item.id}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-no-wrap">
+                <div class="text-sm leading-5 text-gray-900">${item.name}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-no-wrap">
+                  <div class="text-sm leading-5 text-gray-900">${item.email}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                <div class="text-sm leading-5 text-gray-900">${item.phone}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${bookedState}">
+                  ${item.waitlist ? 'On Waitlist' : 'Booked'}
+                </span>
+              </td>
+            </tr>
+        `;
+    }
+
+    $.get('/api/reservations/all').then((data) =>  {
+        const output = data.reduce((htmlBody, reservation) => `${htmlBody}${renderReservation(reservation)}`, '');
+        $reservationTableBody.html(output);
+    });
+
+</script>
+</body>
+</html>
