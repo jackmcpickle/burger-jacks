@@ -10,7 +10,7 @@ const {
 } = require('./routes/routes')
 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
 
 const app = express()
 
@@ -18,9 +18,6 @@ const app = express()
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-const tables = [];
-const waitList = [];
 
 // HTML
 app.get('/', renderHomePage);
